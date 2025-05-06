@@ -24,6 +24,7 @@ import {
 
 // We can swap this out for the actual switchboard package once it gets published
 import { Switchboard } from '@superset-ui/switchboard';
+import type { AnyThemeConfig } from "@superset-ui/core/src/theme/types"
 import { getGuestTokenRefreshTiming } from './guestTokenRefresh';
 
 /**
@@ -89,7 +90,7 @@ export type EmbeddedDashboard = {
     callbackFn: ObserveDataMaskCallbackFn,
   ) => void;
   getDataMask: () => Record<string, any>;
-  setThemeConfig: (themeConfig: Record<string, any>) => void;
+  setThemeConfig: (themeConfig: AnyThemeConfig) => void;
 };
 
 /**
@@ -246,7 +247,7 @@ export async function embedDashboard({
     ourPort.start();
     ourPort.defineMethod('observeDataMask', callbackFn);
   };
-  const setThemeConfig = async (themeConfig: Record<string, any>): Promise<void> => {
+  const setThemeConfig = async (themeConfig: AnyThemeConfig): Promise<void> => {
     try {
       ourPort.emit('setThemeConfig', { themeConfig });
       log('Theme config sent successfully (or at least message dispatched)');
